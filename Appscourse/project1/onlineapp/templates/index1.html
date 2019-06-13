@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Name and colleges</title>
+</head>
+<body>
+<h1 style="text-align:left">Students from {{college.name}}</h1>
+{% if 'onlineapp.add_student' in permissions %}
+<form action="{% url 'AddStudent' college.id %}">
+    <input type="submit" value="AddStudent" />
+</form>
+{% endif %}
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Marks</th>
+        <th>Actions</th>
+    </tr>
+    {% for student in values%}
+        <tr>
+            <td>{{student.name}}</td>
+            <td>{{student.mocktest1__total}}</td>
+            <td>
+                {% if 'onlineapp.change_student' in permissions %}
+                <a href="{% url 'editStudent' college.id student.id %}">edit</a>
+                {% else %}
+                edit
+                {% endif %}
+                |
+                {% if 'onlineapp.delete_student' in permissions %}
+                 <a href="{% url 'deleteStudent' college.id student.id %}">delete</a>
+                {% else %}
+                delete
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+</body>
+</html>

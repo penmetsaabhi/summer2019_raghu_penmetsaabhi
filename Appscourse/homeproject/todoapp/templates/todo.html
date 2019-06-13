@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>todolist</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+</head>
+<body>
+<section class="hero is-primary">
+  <div class="hero-body">
+    <div class="container has-text-centered">
+      <h1 class="title">
+        todolist
+      </h1>
+    </div>
+  </div>
+</section>
+<div class="fields">
+    <a style="margin:10px; margin-left:5px;" href="{% url 'addtodlist' %}" class="button is-success is-small is-outlined is-pulled-left" >
+        Addtodolist
+    </a>
+</div>
+<table border="1" class="table is-bordered is-striped is-narrow is-hoverable table is-fullwidth">
+     <tr>
+         <th>Name</th>
+         <th>Time</th>
+     </tr>
+     {% for college in values %}
+     <tr>
+         <td><a href="{% url 'todoitem' college.id %}">{{college.name}}</a></td>
+         <td>{{college.datetime}}</td>
+     </tr>
+     {% endfor %}
+ </table>
+</body>
+</html>

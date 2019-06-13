@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AddStudent</title>
+</head>
+<body>
+<h1>AddStudent</h1>
+
+<form method="post">
+    {% csrf_token %}
+    <div class="control">
+        <label>name</label>
+        {{form1.name}}
+    </div>
+    <div class="control">
+        <label>Email</label>
+        {{form1.email}}
+    </div>
+    <div class="control">
+        <label>DB Folder</label>
+        {{form1.db_folder}}
+    </div>
+    <div class="control">
+        <label>problem1</label>
+        {{form2.problem1}}
+    </div>
+    <div class="control">
+        <label>problem2</label>
+        {{form2.problem2}}
+    </div>
+    <div class="control">
+        <label>problem3</label>
+        {{form2.problem3}}
+    </div>
+    <div class="control">
+        <label>problem4</label>
+        {{form2.problem4}}
+    </div>
+    <div class="control">
+        <label>dropped_out</label>
+        {{form1.dropped_out}}
+    </div>
+     <input type="submit" value="Submit1">
+</form>
+</body>
+</html>

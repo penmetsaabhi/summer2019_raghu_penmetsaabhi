@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Colleges</title>
+</head>
+<body>
+<table>
+    {% for val1 in values %}
+        <tr>
+            <td>{{val1.name}}</td>
+            <td>{{val1.acronym}}</td>
+        </tr>
+    {% endfor %}
+</table>
+</body>
+</html>
