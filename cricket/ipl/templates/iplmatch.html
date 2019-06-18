@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ipl matches</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <script >
+        $(document).ready(function(){
+        var firstName = $('#firstName').text();
+        var lastName = $('#lastName').text();
+        var intials = $('#firstName').text().charAt(0) + $('#lastName').text().charAt(0);
+        var profileImage = $('#profileImage').text(intials);
+        });
+    </script>
+    <style>
+        #profileImage {
+  width: 15px;
+  height: 15px;
+  border-radius: 10%;
+  background: #512DA8;
+  font-size: 10px;
+  color: #fff;
+  text-align: center;
+  line-height: 15px;
+  margin-top:-53px;
+}
+    </style>
+</head>
+<body>
+<section class="hero">
+  <div class="hero-body">
+    <div class="container">
+         <nav class="navbar" role="navigation" aria-label="main navigation">
+ <div class="navbar-end">
+      <div style="margin-left:30px" class="navbar-item">
+          {% if username %}
+          <p class="buttons">
+              <div id="profileImage"></div>
+                <span style="margin-top:-54px;margin-left:2px;" id="firstName"><font color="black">{{username}}</font></span>
+          </p>
+          {% else %}
+                <div class="buttons">
+          <a style="margin-top:-29px;margin-left:30px;" href="{% url 'login' %}" class="button is-small box">
+              <font color="blue"> <b>Login</b></font>
+          </a>
+        </div>
+          {% endif %}
+
+        <div class="buttons">
+          <a style="margin-top:-54px;margin-left:30px;" href="{% url 'logout' %}" class="button is-small box">
+              <font color="red"> <b>Logout</b></font>
+          </a>
+        </div>
+      </div>
+    </div>
+    </nav>
+      <h1 class="title" align="center">
+        Season {{year}}
+      </h1>
+        <h2 align="center">
+            {{values.team1}} vs {{values.team2}}
+        </h2>
+    </div>
+  </div>
+</section>
+<div style="margin:10px;">
+    <ul style="list-style:none;">
+        <li>Team1 : {{values.team1}}</li>
+        <li>Team2 : {{values.team2}}</li>
+        <li>Toss_winner : {{values.toss_winner}}</li>
+        <li>Toss_decision : {{values.toss_decision}}</li>
+        <li>Result : {{values.result}}</li>
+        {% if values.win_by_runs == 0 %}
+        <li>margin : won by {{values.win_by_wickets}} wickets</li>
+        {% else %}
+        <li>margin : won by {{values.win_by_runs}} runs</li>
+        {% endif %}
+        <li>Man of the match : {{values.player_of_match}}</li>
+    </ul>
+</div>
+<div style="margin:10px;">
+    <div>
+    <h1 class="title">Batsam Stats</h1>
+     <ul style="list-style:none;">
+    {% for bat in batsmans %}
+         <li>{{bat.batsman}} : {{bat.dsum}}</li>
+         {% endfor %}
+    </ul>
+    </div>
+    <div>
+    <h1 class="title">Bowlers Stats</h1>
+     <ul style="list-style:none;">
+    {% for bow in bowlers %}
+         <li>{{bow.bowler}} : {{bow.dsum}} </li>
+         {% endfor %}
+    </ul>
+    </div>
+</div>
+<div style="margin:10px;">
+    <h1 class="title">Ball by Ball stats</h1>
+    <div style="margin-left" class="field is-grouped">
+  <p class="control">
+    <a class="button is-link" href="{% url 'innings' year  match 1 %}">
+      innings1
+    </a>
+  </p>
+  <p class="control">
+    <a class="button is-link" href="{% url 'innings' year  match 2 %}">
+      innings2
+    </a>
+  </p>
+    </div>
+    <table style="margin:10px;" class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+     <tr>
+         <th>Over</th>
+         <th>Ball</th>
+         <th>Batsman</th>
+         <th>Bowler</th>
+         <th>Runs</th>
+         <th>wickets</th>
+     </tr>
+    {% for co in comm %}
+     <tr id="tr">
+         <td>{{co.over}}</td>
+         <td>{{co.ball}}</td>
+         <td>{{co.batsman}}</td>
+         <td>{{co.bowler}}</td>
+         <td>{{co.total_runs}}</td>
+         {% if co.player_dismissed %}
+         <td>1 ({{co.player_dismissed}})</td>
+         {% else %}
+         <td>0</td>
+         {% endif %}
+     </tr>
+     {% endfor %}
+    </table>
+</div>
+</body>
+</html>

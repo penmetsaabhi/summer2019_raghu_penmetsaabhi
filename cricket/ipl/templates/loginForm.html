@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login:</title>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <style>
+        button{
+            margin:10px;
+        }
+    </style>
+</head>
+<body class="layout-default">
+  <section class="hero box is-fullheight is-medium is-bold">
+      <form method="post">
+      {% csrf_token %}
+        <div class="hero-body">
+
+          <div class="container">
+            <div class="columns is-centered">
+              <article class="card is-rounded">
+                <div class="card-content">
+                  <label><i>Username:</i></label>
+                  <p style="margin:10px;" class="control has-icon">
+                    {{log.username}}
+                  </p>
+                    <label><i>Password</i></label>
+                     <p style="margin:10px" class="control has-icon">
+                    {{log.password}}
+                  </p>
+                <div class="field is-grouped is-grouped-centered">
+                    <p class="control">
+                    <button class=" field button is-primary is-small" onclick="location.href='{% url 'login' %}';">
+                      <i class="fa fa-user"></i>
+                      login
+                    </button>
+                  </p>
+                    <p class="control">
+                    <a style="margin:10px;" class="field button is-primary is-small" href="{% url 'Signup' %}">
+                      <i class="fa fa-user"></i>
+                      Signup
+                    </a>
+                    </p>
+                </div>
+                </div>
+                  {% if messages %}
+                        <ul class="messages">
+                             {% for message in messages %}
+                            <li {% if message.tags %} class="{{ message.tags }}  has-text-centered" {% endif %}>{{ message }}</li>
+                        {% endfor %}
+                        </ul>
+                  {% endif %}
+              </article>
+            </div>
+          </div>
+        </div>
+      </form>
+  </section>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+</body>
+</html>

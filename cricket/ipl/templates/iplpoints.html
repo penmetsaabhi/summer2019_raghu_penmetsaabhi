@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>iplSummary</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <script >
+        $(document).ready(function(){
+        var firstName = $('#firstName').text();
+        var lastName = $('#lastName').text();
+        var intials = $('#firstName').text().charAt(0) + $('#lastName').text().charAt(0);
+        var profileImage = $('#profileImage').text(intials);
+        });
+    </script>
+    <style>
+        #profileImage {
+  width: 15px;
+  height: 15px;
+  border-radius: 10%;
+  background: #512DA8;
+  font-size: 10px;
+  color: #fff;
+  text-align: center;
+  line-height: 15px;
+  margin-top:-53px;
+}
+    </style>
+</head>
+<body>
+<section class="hero is-dark">
+  <div class="hero-body">
+    <div class="container">
+         <nav class="navbar" role="navigation" aria-label="main navigation">
+ <div class="navbar-end">
+      <div style="margin-left:30px" class="navbar-item">
+          {% if username %}
+          <p class="buttons">
+              <div id="profileImage"></div>
+                <span style="margin-top:-54px;margin-left:2px;" id="firstName"><font color="black">{{username}}</font></span>
+          </p>
+          {% else %}
+                <div class="buttons">
+          <a style="margin-top:-29px;margin-left:30px;" href="{% url 'login' %}" class="button is-primary is-small box">
+              <font color="blue"> <b>Login</b></font>
+          </a>
+        </div>
+          {% endif %}
+
+        <div class="buttons">
+          <a style="margin-top:-54px;margin-left:30px;" href="{% url 'logout' %}" class="button is-primary is-small box">
+              <font color="red"> <b>Logout</b></font>
+          </a>
+        </div>
+      </div>
+    </div>
+    </nav>
+      <h1 class="title" align="center">
+        IPL Points Table
+      </h1>
+    </div>
+  </div>
+</section>
+<div style="margin:10px" class="field is-grouped">
+    <label style="margin-top:5px;margin-right:10px;">Seasons </label>
+  {% for  year in years %}
+    <p class="control">
+    <a class="button" href="{% url 'points' year %}">
+      {{year}}
+    </a>
+  </p>
+    {% endfor %}
+</div>
+<div style="background-image: url("{% static "teamimages/csk.gif" %}");">
+<div>
+    <h1 class="title" style="margin:10px" align="center"><font color="black"><b>IPL {{pyear}}</b></font></h1>
+</div>
+<div>
+    <h2 class="title"><font color="grey"><b>Champion : {{Winner}}</b></font></h2>
+</div>
+<figure >
+  <img style="margin:10px" class="image is-300x300 center" src="{% static "teamimages/csk1.gif" %}" placeholder="csk">
+</figure>
+<table style="margin:10px;" border="1" class="table is-bordered is-striped is-narrow is-hoverable table is-fullwidth">
+     <tr>
+         <th>Team</th>
+         <th>Matches played</th>
+         <th>Won</th>
+         <th>Lose</th>
+         <th>points</th>
+     </tr>
+    {% for match in points %}
+     <tr>
+         {% for val in match %}
+         <td>{{val}}</td>
+         {% endfor %}
+     </tr>
+    {% endfor %}
+ </table>
+    </div>
+</body>
+</html>

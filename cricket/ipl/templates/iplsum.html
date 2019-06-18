@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>iplSummary</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <script >
+        $(document).ready(function(){
+        var firstName = $('#firstName').text();
+        var lastName = $('#lastName').text();
+        var intials = $('#firstName').text().charAt(0) + $('#lastName').text().charAt(0);
+        var profileImage = $('#profileImage').text(intials);
+        });
+    </script>
+    <style>
+        #profileImage {
+  width: 15px;
+  height: 15px;
+  border-radius: 10%;
+  background: #512DA8;
+  font-size: 10px;
+  color: #fff;
+  text-align: center;
+  line-height: 15px;
+  margin-top:-53px;
+}
+    </style>
+</head>
+<body>
+<section class="hero is-primary">
+  <div class="hero-body">
+    <div class="container">
+         <nav class="navbar" role="navigation" aria-label="main navigation">
+ <div class="navbar-end">
+      <div style="margin-left:30px" class="navbar-item">
+          {% if username %}
+          <p class="buttons">
+              <div id="profileImage"></div>
+                <span style="margin-top:-54px;margin-left:2px;" id="firstName"><font color="black">{{username}}</font></span>
+          </p>
+          {% else %}
+                <div class="buttons">
+          <a style="margin-top:-29px;margin-left:30px;" href="{% url 'login' %}" class="button is-primary is-small box">
+              <font color="blue"> <b>Login</b></font>
+          </a>
+        </div>
+          {% endif %}
+
+        <div class="buttons">
+          <a style="margin-top:-54px;margin-left:30px;" href="{% url 'logout' %}" class="button is-primary is-small box">
+              <font color="red"> <b>Logout</b></font>
+          </a>
+        </div>
+      </div>
+    </div>
+    </nav>
+      <h1 class="title" align="center">
+        IPL SUMMARY
+      </h1>
+    </div>
+  </div>
+</section>
+{% csrf_token %}
+<div style="margin:10px" class="field is-grouped">
+    <label style="margin-top:5px;margin-right:10px;">Seasons </label>
+  {% for  year in years %}
+    <p class="control">
+    <a class="button" href="{% url 'oplidsummary' year %}">
+      {{year}}
+    </a>
+  </p>
+    {% endfor %}
+</div>
+<div style="background-color:grey;">
+<h1 class="title" style="margin:10px" align="center">IPL {{pyear}}</h1>
+</div>
+<table style="margin:10px;" border="1" class="table is-bordered is-striped is-narrow is-hoverable table is-fullwidth">
+     <tr>
+         <th>Team1</th>
+         <th>Team2</th>
+         <th>Toss_winner</th>
+         <th>Toss_decision</th>
+         <th>Winner</th>
+         <th>Man of the Match</th>
+         <th></th>
+     </tr>
+    {% for val in values %}
+     <tr>
+         <td>{{val.team1}}</td>
+         <td>{{val.team2}}</td>
+         <td>{{val.toss_winner}}</td>
+         <td>{{val.toss_decision}}</td>
+         <td>{{val.winner}}</td>
+         <td>{{val.player_of_match}}</td>
+         <td><a href="{% url 'iplindmatch' pyear val.matchid %}">View Match Details</a></td>
+     </tr>
+     {% endfor %}
+ </table>
+<nav style="margin-top:10px" class="pagination is-centered" role="navigation" aria-label="pagination">
+    {% if pre is not None %}
+  <a class="pagination-previous" href="{% url 'oplidstr' pyear pre %}">Previous</a>
+    {% endif %}
+{% if next is not None %}
+  <a class="pagination-next" href="{% url 'oplidstr' pyear next %}">Next page</a>
+  {% endif %}
+    <ul class="pagination-list">
+    <li><a class="pagination-link" aria-label="Goto page 1">1</a></li>
+    <li><span class="pagination-ellipsis">&hellip;</span></li>
+    <li><a class="pagination-link" aria-label="Goto page 5">5</a></li>
+    <li><a class="pagination-link is-current" aria-label="Page 6" aria-current="page">6</a></li>
+    <li><a class="pagination-link" aria-label="Goto page 7">7</a></li>
+    <li><span class="pagination-ellipsis">&hellip;</span></li>
+    <li><a class="pagination-link" aria-label="Goto page 8">6</a></li>
+  </ul>
+</nav>
+</body>
+</html>
