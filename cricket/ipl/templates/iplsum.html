@@ -1,11 +1,11 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>iplSummary</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
     <script >
         $(document).ready(function(){
         var firstName = $('#firstName').text();
@@ -29,7 +29,7 @@
     </style>
 </head>
 <body>
-<section class="hero is-primary">
+<section class="hero">
   <div class="hero-body">
     <div class="container">
          <nav class="navbar" role="navigation" aria-label="main navigation">
@@ -38,7 +38,7 @@
           {% if username %}
           <p class="buttons">
               <div id="profileImage"></div>
-                <span style="margin-top:-54px;margin-left:2px;" id="firstName"><font color="black">{{username}}</font></span>
+                <span style="margin-top:-54px;margin-left:2px;" id="firstName"><font color="red">{{username}}</font></span>
           </p>
           {% else %}
                 <div class="buttons">
@@ -49,7 +49,7 @@
           {% endif %}
 
         <div class="buttons">
-          <a style="margin-top:-54px;margin-left:30px;" href="{% url 'logout' %}" class="button is-primary is-small box">
+          <a style="margin-top:-54px;margin-left:30px;" href="{% url 'logout' %}" class="button is-small box">
               <font color="red"> <b>Logout</b></font>
           </a>
         </div>
@@ -57,7 +57,7 @@
     </div>
     </nav>
       <h1 class="title" align="center">
-        IPL SUMMARY
+          <font color="black">IPL SUMMARY</font>
       </h1>
     </div>
   </div>
@@ -73,8 +73,15 @@
   </p>
     {% endfor %}
 </div>
-<div style="background-color:grey;">
-<h1 class="title" style="margin:10px" align="center">IPL {{pyear}}</h1>
+<div style="margin-left:10px;">
+    <p class="control">
+    <a class="button is-dark" href="{% url 'points' %}">
+      <font color="white">Points Table</font>
+    </a>
+  </p>
+</div>
+<div>
+    <h1 class="title" style="margin:10px" align="center"><font color="black"><b>IPL {{pyear}}</b></font></h1>
 </div>
 <table style="margin:10px;" border="1" class="table is-bordered is-striped is-narrow is-hoverable table is-fullwidth">
      <tr>
@@ -100,20 +107,16 @@
  </table>
 <nav style="margin-top:10px" class="pagination is-centered" role="navigation" aria-label="pagination">
     {% if pre is not None %}
-  <a class="pagination-previous" href="{% url 'oplidstr' pyear pre %}">Previous</a>
+  <a class="button is-info pagination-previous" href="{% url 'oplidstr' pyear pre %}">Previous</a>
+    {% else %}
+    <a class="button is-primary pagination-previous" title="Disabled button" disabled>Previous</a>
     {% endif %}
+
 {% if next is not None %}
-  <a class="pagination-next" href="{% url 'oplidstr' pyear next %}">Next page</a>
-  {% endif %}
-    <ul class="pagination-list">
-    <li><a class="pagination-link" aria-label="Goto page 1">1</a></li>
-    <li><span class="pagination-ellipsis">&hellip;</span></li>
-    <li><a class="pagination-link" aria-label="Goto page 5">5</a></li>
-    <li><a class="pagination-link is-current" aria-label="Page 6" aria-current="page">6</a></li>
-    <li><a class="pagination-link" aria-label="Goto page 7">7</a></li>
-    <li><span class="pagination-ellipsis">&hellip;</span></li>
-    <li><a class="pagination-link" aria-label="Goto page 8">6</a></li>
-  </ul>
+  <a class="button is-info  pagination-next" href="{% url 'oplidstr' pyear next %}">Next page</a>
+  {% else %}
+    <a class="button is-primary pagination-previous" title="Disabled button" disabled>Next page</a>
+    {% endif %}
 </nav>
 </body>
 </html>

@@ -21,27 +21,35 @@
             <div class="columns is-centered">
               <article class="card is-rounded">
                 <div class="card-content">
-                  <label><i>Username:</i></label>
+                    <label><i>First_name:</i></label>
                   <p style="margin:10px;" class="control has-icon">
+                    {{log.firstname}}
+                  </p>
+                    <label><i>Last_name</i></label>
+                     <p style="margin:10px" class="control has-icon">
+                    {{log.lastname}}
+                  </p>
+                    <label><i>Username:</i></label>
+                     <p style="margin:10px" class="control has-icon">
                     {{log.username}}
                   </p>
-                    <label><i>Password</i></label>
+                    <label><i>Password:</i></label>
                      <p style="margin:10px" class="control has-icon">
                     {{log.password}}
                   </p>
                 <div class="field is-grouped is-grouped-centered">
-                    <p class="control">
-                    <button class=" field button is-primary is-small" onclick="location.href='{% url 'login' %}';">
+                     <p class="control">
+                    <button class=" field button is-primary is-small" onclick="location.href='{% url 'Signup' %}';">
                       <i class="fa fa-user"></i>
                       login
                     </button>
-                  </p>
+                     </p>
                     <p class="control">
-                    <a style="margin:10px;" class="field button is-primary is-small" href="{% url 'Signup' %}">
+                    <button class=" field button is-primary is-small" onclick="location.href='{% url 'iplsummary' %}';">
                       <i class="fa fa-user"></i>
-                      Signup
-                    </a>
-                    </p>
+                      Summary
+                    </button>
+                  </p>
                 </div>
                 </div>
                   {% if messages %}

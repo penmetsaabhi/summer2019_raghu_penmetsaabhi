@@ -45,6 +45,7 @@ class indMatchView(LoginRequiredMixin,View):
             if "id3" in kwargs:
                 matches=Matches.objects.all().filter(season=kwargs["id1"],matchid=kwargs["id2"])[0]
                 commentry=Deliviers.objects.all().filter(match1_id=kwargs["id2"],inning=kwargs["id3"])
+
                 innings=kwargs["id3"]
             else:
                 matches = Matches.objects.all().filter(season=kwargs["id1"], matchid=kwargs["id2"])[0]
@@ -52,6 +53,8 @@ class indMatchView(LoginRequiredMixin,View):
                 innings=1
             batsman=Deliviers.objects.values("batsman").filter(match1_id=kwargs["id2"]).annotate(dsum=Sum("batsman_runs")).order_by("-dsum")[:3]
             bowler=Deliviers.objects.values("bowler").filter(match1_id=kwargs["id2"]).annotate(dsum=Count("player_dismissed")).order_by("-dsum")[:3]
+            team1Score=Deliviers.objects.all().values('match1_id').filter(match1_id=1,inning=1).annotate(dsum=Sum('total_runs'))
+            team2Score=Deliviers.objects.all().values('match1_id').filter(match1_id=1,inning=2).annotate(dsum=Sum('total_runs'))
             return render(
                 request,
                 template_name="iplmatch.html",
@@ -63,6 +66,8 @@ class indMatchView(LoginRequiredMixin,View):
                     "innings":innings,
                     "batsmans":batsman,
                     "bowlers":bowler,
+                    "team1Sc":team1Score,
+                    "team2Sc":team2Score,
                     "username":username
                  }
              )
@@ -74,8 +79,12 @@ class indMatchView(LoginRequiredMixin,View):
         pre=None
         count=Matches.objects.all().filter(season=season).count()
         matches = Matches.objects.all().filter(season=season)[val1:val2]
+        team1Score = Deliviers.objects.all().values('match1_id').filter(match1_id=1, inning=1).annotate(
+            dsum=Sum('total_runs'))
+        team2Score = Deliviers.objects.all().values('match1_id').filter(match1_id=1, inning=2).annotate(
+            dsum=Sum('total_runs'))
         yr = season
-        if(val1!=1):
+        if(val1!=0):
             pre=str((val1-8))+ "-"+str((val1))
         if(val2<count):
             next=str((val2))+"-"+str((val2+8))
@@ -91,6 +100,8 @@ class indMatchView(LoginRequiredMixin,View):
                 "pyear": yr,
                 "pre": pre,
                 "next": next,
+                "team1Sc": team1Score,
+                "team2Sc": team2Score,
                 "username":username
             }
         )

@@ -1,22 +1,56 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>iplSummary</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
-    <script >
+    <script>
         $(document).ready(function(){
         var firstName = $('#firstName').text();
         var lastName = $('#lastName').text();
         var intials = $('#firstName').text().charAt(0) + $('#lastName').text().charAt(0);
         var profileImage = $('#profileImage').text(intials);
         });
+        function mine(data){
+        colors={
+            "Sunrisers Hyderabad" : "orange",
+            "Mumbai Indians" : "darkblue",
+            "Royal Challengers Bangalore" : "black",
+            "Kolkata Knight Riders" : "violet",
+            "Delhi Daredevils" : "blue",
+            "Kings XI Punjab" : "red",
+            "Chennai Super Kings" : "yellow",
+            "Rajasthan Royals" : "pink",
+            "Delhi Capitals" : "blue",
+              "Deccan Chargers":"lightblue"
+        }
+         gifs={
+            "Sunrisers Hyderabad" : "sh1.jpg",
+            "Mumbai Indians" : "mum1.gif",
+            "Royal Challengers Bangalore" : "black",
+            "Kolkata Knight Riders" : "kk1.jpg",
+            "Delhi Daredevils" : "blue",
+            "Kings XI Punjab" : "red",
+            "Chennai Super Kings" : "csk1.gif",
+            "Rajasthan Royals" : "rr1.jpg",
+            "Delhi Capitals" : "blue",
+              "Deccan Chargers":"dc1.jpg"
+        }
+           var div1=document.getElementById('name');
+            var str=div1.innerHTML;
+            var res=str.replace("Tcolor",colors[data]);
+            res=res.replace("Winner",data);
+            div1.innerHTML=res;
+            div1=document.getElementById('img');
+             var str=div1.innerHTML;
+            var res=str.replace("CHANGE",gifs[data]);
+             div1.innerHTML=res;
+        }
     </script>
     <style>
-        #profileImage {
+     #profileImage {
   width: 15px;
   height: 15px;
   border-radius: 10%;
@@ -30,7 +64,7 @@
     </style>
 </head>
 <body>
-<section class="hero is-dark">
+<section class="hero">
   <div class="hero-body">
     <div class="container">
          <nav class="navbar" role="navigation" aria-label="main navigation">
@@ -39,7 +73,7 @@
           {% if username %}
           <p class="buttons">
               <div id="profileImage"></div>
-                <span style="margin-top:-54px;margin-left:2px;" id="firstName"><font color="black">{{username}}</font></span>
+                <span style="margin-top:-54px;margin-left:2px;" id="firstName"><font color="red">{{username}}</font></span>
           </p>
           {% else %}
                 <div class="buttons">
@@ -50,7 +84,7 @@
           {% endif %}
 
         <div class="buttons">
-          <a style="margin-top:-54px;margin-left:30px;" href="{% url 'logout' %}" class="button is-primary is-small box">
+          <a style="margin-top:-54px;margin-left:30px;" href="{% url 'logout' %}" class="button is-info is-outlined is-small box">
               <font color="red"> <b>Logout</b></font>
           </a>
         </div>
@@ -58,7 +92,7 @@
     </div>
     </nav>
       <h1 class="title" align="center">
-        IPL Points Table
+          <font color="black">IPL POINTS TABLE</font>
       </h1>
     </div>
   </div>
@@ -77,13 +111,21 @@
 <div>
     <h1 class="title" style="margin:10px" align="center"><font color="black"><b>IPL {{pyear}}</b></font></h1>
 </div>
-<div>
-    <h2 class="title"><font color="grey"><b>Champion : {{Winner}}</b></font></h2>
+<div id="name">
+<h2 class="title">Champion : <font color="Tcolor"><strong>Winner</strong></font></h2>
+
 </div>
-<figure >
-  <img style="margin:10px" class="image is-300x300 center" src="{% static "teamimages/csk1.gif" %}" placeholder="csk">
+ <div style="justify-content:center;" class='card-content is-flex is-horizontal-center'>
+<figure id="img" class='image is-256x256'>
+  <img style="margin:10px" src="{% static "teamimages/CHANGE" %}">
 </figure>
-<table style="margin:10px;" border="1" class="table is-bordered is-striped is-narrow is-hoverable table is-fullwidth">
+ </div>
+<script>
+    mine("{{Winner}}");
+</script>
+<table style="
+margin:10px;background-color:transparent;
+" border="1" class="table is-bordered is-striped is-narrow is-hoverable table is-fullwidth">
      <tr>
          <th>Team</th>
          <th>Matches played</th>
@@ -100,5 +142,6 @@
     {% endfor %}
  </table>
     </div>
+
 </body>
 </html>

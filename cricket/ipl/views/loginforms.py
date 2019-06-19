@@ -36,7 +36,7 @@ class signupView(View):
         signup=loginforms.signupForm()
         return render(
             request,
-            template_name='signup.html',
+            template_name='signup1.html',
             context={
                 'log':signup
             }

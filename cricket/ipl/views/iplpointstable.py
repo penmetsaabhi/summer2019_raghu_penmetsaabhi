@@ -10,7 +10,7 @@ def get_points_dict(season):
     count=(Matches.objects.values('team1').filter(season=season).distinct().count() -1 )*2
     print(Matches.objects.all().filter(season=season).count())
     print(count)
-    if(season in [2009,2008,20010]):
+    if(season in [2009,2008,2010]):
         leavemat=3
     else:
         leavemat=4
@@ -40,6 +40,7 @@ def get_points_dict(season):
     return points
 class ipltableView(View):
     def get(self,request,*args,**kwargs):
+        username = request.user.username
         years = [2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019]
         if kwargs:
             points=get_points_dict(kwargs["id1"])
@@ -56,7 +57,9 @@ class ipltableView(View):
                 "points":points,
                 "Winner":winner,
                 "years":years,
-                "pyear":year
+                "pyear":year,
+                "username":username,
+                "chennai":"Chennai Super Kings"
             }
         )
 
