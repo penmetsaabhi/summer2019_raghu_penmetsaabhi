@@ -18,7 +18,9 @@ from django.urls import path
 from django.conf import settings
 from django.urls import include  # For django versions from 2.0 and up
 from ipl import urls
+from ipl.views import iplhome
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('ipl/',include(urls)  )
+    path('ipl/',include(urls)),
+    path('',iplhome.IplHomeView.as_view(),name="home")
 ]

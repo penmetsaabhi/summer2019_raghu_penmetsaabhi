@@ -30,40 +30,48 @@
     </style>
 </head>
 <body>
-<section class="hero">
-  <div class="hero-body">
-    <div class="container">
-         <nav class="navbar" role="navigation" aria-label="main navigation">
- <div class="navbar-end">
-       <div style="margin-left:30px" class="navbar-item">
-          {% if username %}
-          <p class="buttons">
-              <div id="profileImage"></div>
-                <span style="margin-top:-54px;margin-left:2px;" id="firstName"><font color="red">{{username}}</font></span>
-          </p>
-          {% else %}
-                <div class="buttons">
-          <a style="margin-top:-29px;margin-left:30px;" href="{% url 'login' %}" class="button is-primary is-small box">
-              <font color="blue"> <b>Login</b></font>
+<section class="hero is-info">
+  <!-- Hero head: will stick at the top -->
+  <div class="hero-head">
+    <nav class="navbar">
+      <div class="container">
+        <div class="navbar-brand">
+          <a  class="navbar-item" href="{% url 'home' %}">
+            <img src="{% static "teamimages/ipllogo5.png" %}" alt="Logo">
           </a>
+            <a class="navbar-item" href="{% url 'iplsummary' %}">
+             Summary
+            </a>
+            <a class="navbar-item" href="{% url 'points' %}">
+              PointsTable
+            </a>
+            <a class="navbar-item" href="{% url 'teams' %}">
+              Teams
+            </a>
+          <span class="navbar-burger burger" data-target="navbarMenuHeroA">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
         </div>
-          {% endif %}
-
-        <div class="buttons">
-          <a style="margin-top:-54px;margin-left:30px;" href="{% url 'logout' %}" class="button is-small box">
-              <font color="red"> <b>Logout</b></font>
+        <div id="navbarMenuHeroA" class="navbar-menu">
+          <div class="navbar-end">
+              {% if username %}
+            <a  class="navbar-item">
+                <img src="{% static "teamimages/user.png" %}" alt="Logo"><b>{{username}}</b>
           </a>
+              {% else %}
+              <a class="navbar-item" href="{% url 'login' %}">
+              login
+            </a>
+              {% endif %}
+            <a class="navbar-item" href="{% url 'logout' %}">
+              logout
+            </a>
+          </div>
         </div>
       </div>
-    </div>
     </nav>
-      <h1 class="title" align="center">
-        Season {{year}}
-      </h1>
-        <h2 align="center">
-            {{values.team1}} vs {{values.team2}}
-        </h2>
-    </div>
   </div>
 </section>
 <div style="margin-left:10px;">

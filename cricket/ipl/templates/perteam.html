@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+        function changeColor(team){
+         colors={
+            "Sunrisers Hyderabad" : "orange",
+            "Mumbai Indians" : "darkblue",
+            "Royal Challengers Bangalore" : "black",
+            "Kolkata Knight Riders" : "purple",
+            "Kings XI Punjab" : "red",
+            "Chennai Super Kings" : "yellow",
+            "Rajasthan Royals" : "pink",
+            "Delhi Capitals" : "blue",
+              "Gujarat Lions" : "gold",
+              "Rising Pune Supergiant":"violet",
+              "Pune Warriors":"turquoise",
+              "Kochi Tuskers Kerala":"purple",
+               }
+           var div1=document.getElementsByClassName("color");
+           for(var i=0;i<div1.length;i++){
+                    res="background-color:"+colors[team]+";";
+                    console.log(res);
+                      div1[i].setAttribute("style",res);
+           }
+           }
+
+    </script>
+</head>
+<body>
+<section class="hero is-info">
+  <!-- Hero head: will stick at the top -->
+  <div class="hero-head">
+    <nav class="navbar">
+      <div class="container">
+        <div class="navbar-brand">
+          <a  class="navbar-item" href="{% url 'home' %}">
+            <img src="{% static "teamimages/ipllogo5.png" %}" alt="Logo">
+          </a>
+            <a class="navbar-item" href="{% url 'iplsummary' %}">
+             Summary
+            </a>
+            <a class="navbar-item" href="{% url 'points' %}">
+              PointsTable
+            </a>
+            <a class="navbar-item" href="{% url 'teams' %}">
+              Teams
+            </a>
+          <span class="navbar-burger burger" data-target="navbarMenuHeroA">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </div>
+        <div id="navbarMenuHeroA" class="navbar-menu">
+          <div class="navbar-end">
+              {% if username %}
+            <a  class="navbar-item">
+                <img src="{% static "teamimages/user.png" %}" alt="Logo"><b>{{username}}</b>
+          </a>
+              {% else %}
+              <a class="navbar-item" href="{% url 'login' %}">
+              login
+            </a>
+              {% endif %}
+            <a class="navbar-item" href="{% url 'logout' %}">
+              logout
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+</section>
+ <section class="color hero is-primary">
+  <div class="hero-body">
+    <div class="container has-text-centered">
+      <h1 class="title">
+          {{team}}
+      </h1>
+    </div>
+  </div>
+</section>
+
+ <div style="width:800px; margin:10px auto;">
+
+     <p class="color"><strong style="margin-left:350px;"><font color="white">Team Stats</font></strong></p>
+    <table class="table is-hoverable table is-fullwidth">
+        {% for match in played %}
+            <tr>
+                {% for list in match %}
+                <td>{{list}}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+<div class="columns is-multiline is-mobile">
+    <div  class="column  is-half">
+        <p class="color"><strong style="margin-left:270px;"><font color="white">Top 5 batsmans</font></strong></p>
+        <table class="table is-hoverable table is-fullwidth">
+             <tr>
+                    <th>Player</th>
+                    <th>Runs</th>
+                </tr>
+            {% for batsman in batsmans %}
+            <tr>
+
+                <td>{{batsman.batsman}}</td>
+                <td>{{batsman.dsum}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+     <div class="column is-half">
+         <p class="color"><strong style="margin-left:290px;"><font color="white">Top 5 Bowlers</font></strong></p>
+        <table class="table is-hoverable table is-fullwidth">
+            <tr>
+                    <th>Player</th>
+                    <th>Wickets</th>
+                </tr>
+            {% for bowler in bowlers %}
+            <tr>
+
+                <td>{{bowler.bowler}}</td>
+                <td>{{bowler.dsum}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+<div style="width:800px; margin:10px auto;">
+
+    <p class="color"><strong style="margin-left:350px;"><font color="white">Performance</font></strong></p>
+    <table class="table is-hoverable table is-fullwidth">
+            <tr>
+                <th>Season</th>
+                <th>Played</th>
+                <th>Won</th>
+                <th>Lose</th>
+                <th>Summary</th>
+            </tr>
+            {% for match in stats %}
+            <tr>
+                {% for list in match %}
+                <td>{{list}}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+</div>
+<script>
+    changeColor("{{team}}");
+</script>
+</body>
+</html>

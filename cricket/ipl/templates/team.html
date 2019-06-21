@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <meta charset="UTF-8">
+    <title>iplSummary</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+        function changeCard(data){
+         logo={
+            "Sunrisers Hyderabad" : "<img src=\"/static/teamimages/srhlogo.jpg\">",
+            "Mumbai Indians" : "<img src=\"/static/teamimages/mumlogo.jpg\">",
+            "Royal Challengers Bangalore" : "<img src=\"/static/teamimages/rcb1logo.png\">",
+            "Kolkata Knight Riders" : "<img src=\"/static/teamimages/kkrlogo.jpg\">",
+            "Kings XI Punjab" : "<img src=\"/static/teamimages/kxplogo.jpg\">",
+            "Chennai Super Kings" : "<img src=\"/static/teamimages/csklogo.png\">",
+            "Rajasthan Royals" : "<img src=\"/static/teamimages/rr1logo.png\">",
+            "Delhi Capitals" : "<img src=\"/static/teamimages/dcqlogo.png\">",
+            "Gujarat Lions" : "<img src=\"/static/teamimages/gllogo.jpg\">",
+             "Rising Pune Supergiant":"<img src=\"/static/teamimages/rpslogo.jpg\">",
+              "Pune Warriors" :"<img src=\"/static/teamimages/pwslogo.png\">",
+             "Kochi Tuskers Kerala":"<img src=\"/static/teamimages/ktklogo.png\">",
+        }
+        urls={
+            "Sunrisers Hyderabad" :"{% url 'perteam' 1 %}",
+            "Mumbai Indians" : "{% url 'perteam' 2 %}",
+            "Royal Challengers Bangalore" : "{% url 'perteam' 3 %}",
+            "Kolkata Knight Riders" : "{% url 'perteam' 4 %}",
+            "Kings XI Punjab" : "{% url 'perteam' 5 %}",
+            "Chennai Super Kings" : "{% url 'perteam' 6 %}",
+            "Rajasthan Royals" : "{% url 'perteam' 7 %}",
+            "Delhi Capitals" : "{% url 'perteam' 8 %}",
+            "Gujarat Lions" : "{% url 'perteam' 9 %}",
+             "Rising Pune Supergiant":"{% url 'perteam' 10 %}",
+              "Pune Warriors" :"{% url 'perteam' 11 %}",
+             "Kochi Tuskers Kerala":"{% url 'perteam' 12 %}",
+        }
+        var div1=document.getElementsByClassName("changeData");
+        div1=div1[ div1.length-1];
+        div1.innerHTML=""
+         var div2=document.getElementsByClassName("team");
+        div2=div2[ div2.length-1];
+        var div3=document.getElementsByClassName("winners");
+        div3=div3[ div3.length-1];
+        var win="";
+        var index1=data.indexOf(",")+1;
+        if(index1 !=0){
+        var index2=data.indexOf("]",index1);
+        for(var i=index1;i<index2;i++){
+            win=win+data[i];
+        }
+        div3.innerHTML=win;
+        }
+         var res="";
+         var n=data.indexOf(";")+1;
+         var q=data.indexOf("#",n);
+         for(var i=n;i<q-1;i++){
+            res=res+data[i];
+         }
+         div2.innerHTML=res;
+         div1.innerHTML=logo[res];
+         var div4=document.getElementsByClassName("url");
+        div4=div4[ div4.length-1];
+        div4.setAttribute("href",urls[res]);
+        console.log(div4);
+        }
+    </script>
+</head>
+<body>
+<section class="hero is-info">
+  <!-- Hero head: will stick at the top -->
+  <div class="hero-head">
+    <nav class="navbar">
+      <div class="container">
+        <div class="navbar-brand">
+          <a  class="navbar-item" href="{% url 'home' %}">
+            <img src="{% static "teamimages/ipllogo5.png" %}" alt="Logo">
+          </a>
+            <a class="navbar-item" href="{% url 'iplsummary' %}">
+             Summary
+            </a>
+            <a class="navbar-item" href="{% url 'points' %}">
+              PointsTable
+            </a>
+            <a class="navbar-item" href="{% url 'teams' %}">
+              Teams
+            </a>
+          <span class="navbar-burger burger" data-target="navbarMenuHeroA">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </div>
+        <div id="navbarMenuHeroA" class="navbar-menu">
+          <div class="navbar-end">
+              {% if username %}
+            <a  class="navbar-item">
+                <img src="{% static "teamimages/user.png" %}" alt="Logo"><b>{{username}}</b>
+          </a>
+              {% else %}
+              <a class="navbar-item" href="{% url 'login' %}">
+              login
+            </a>
+              {% endif %}
+            <a class="navbar-item" href="{% url 'logout' %}">
+              logout
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+</section>
+
+<div class="columns is-multiline is-mobile">
+    {% for team in teams %}
+    <div style="margin:10px;width:20%;margin-left:45px;" class="column  is-one-quarter">
+     <a class="url"><div class="card">
+            <div style="height:300px;" class='card'>
+                 <div class="card-image">
+      <figure class="changeData image is-4by3">
+
+    </figure>
+    </div>
+    <div class="card-content">
+    <div class="media">
+      <div class="media-content has-text-centered">
+        <p class="team title is-5" ></p>
+          <p><strong><font class="winners" color="gold"></font></strong></p>
+      </div>
+    </div>
+    </div>
+  </div>
+    </div></a></div>
+    <script>
+        changeCard("{{team}}");
+    </script>
+    {% endfor %}
+</div>
+</body>
+</html>

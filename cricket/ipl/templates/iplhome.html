@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+<body>
+<section class="hero is-info">
+  <!-- Hero head: will stick at the top -->
+  <div class="hero-head">
+    <nav class="navbar">
+      <div class="container">
+        <div class="navbar-brand">
+          <a  class="navbar-item" href="{% url 'home' %}">
+            <img src="{% static "teamimages/ipllogo5.png" %}" alt="Logo">
+          </a>
+            <a class="navbar-item" href="{% url 'iplsummary' %}">
+             Summary
+            </a>
+            <a class="navbar-item" href="{% url 'points' %}">
+              PointsTable
+            </a>
+            <a class="navbar-item" href="{% url 'teams' %}">
+              Teams
+            </a>
+          <span class="navbar-burger burger" data-target="navbarMenuHeroA">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </div>
+        <div id="navbarMenuHeroA" class="navbar-menu">
+          <div class="navbar-end">
+              {% if username %}
+            <a  class="navbar-item">
+                <img src="{% static "teamimages/user.png" %}" alt="Logo"><b>{{username}}</b>
+          </a>
+              {% else %}
+              <a class="navbar-item" href="{% url 'login' %}">
+              login
+            </a>
+              {% endif %}
+            <a class="navbar-item" href="{% url 'logout' %}">
+              logout
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+</section>
+
+<div style="margin-top:0.2px;background-image: url('{% static "teamimages/home1.jpg" %}');" class="columns">
+  <div class="column is-one-quarter">
+      <table style="
+margin:10px;margin-left:1000px;background-color:rgba(0,0,0,0.7);
+" border="1" class="table is-bordered is-narrow table">
+          <h1 style="margin:10px;margin-left:1000px;background-color:rgba(255,255,255,0.7)"><font color="white">PointsTable 2019</font></h1>
+     <tr>
+         <th><font color="white">Team</font></th>
+         <th><font color="white">Matches</font></th>
+         <th><font color="white">Won</font></th>
+         <th><font color="white">Lose</font></th>
+         <th><font color="white">points</font></th>
+     </tr>
+    {% for match in points %}
+     <tr>
+         {% for val in match %}
+         <td><font color="White">{{val}}</font></td>
+         {% endfor %}
+     </tr>
+    {% endfor %}
+ </table>
+  </div>
+</div>
+<div class="has-text-centered">
+    <h1 class="title"><strong><b><font color="blue">2019 Champions MumbaiIndians</font></b></strong></h1>
+</div>
+
+<div class="has-text-left">
+    <h1 class="title is-5" style="margin-top:20px;margin-left:10px"><strong><i><font color="black">Playoffs in 2019</font></i></strong></h1>
+</div>
+<div style="margin-top:20px" class="columns is-multiline is-mobile">
+
+    <div style="margin:10px;width:20%;margin-left:45px;" class="column  is-one-quarter">
+     <div class="card">
+    <div class="card-content">
+    <div class="media">
+      <div class="media-content has-text-centered">
+        <p class="team title is-5" >{{playoffs.0.0}}</p>
+          <p class="team title is-5">VS</p>
+        <p class="team title is-5" >{{playoffs.0.1}}</p>
+          <p class="team title is-5"><strong><font class="winners" color="gold">{{playoffs.0.2}}</font></strong></p>
+        <p >Venue:{{playoffs.0.3}}</p>
+          <a style="margin-top:25px;" href="{% url 'iplindmatch' playoffs.0.4 playoffs.0.5 %}" class="button is-danger is-rounded is-outlined">Match Deatils</a>
+    </div>
+      </div>
+  </div>
+    </div></div>
+     <div style="margin:10px;width:20%;margin-left:45px;" class="column  is-one-quarter">
+     <div class="card">
+            <div class='card equal-height'>
+    <div class="card-content">
+    <div class="media">
+      <div class="media-content has-text-centered">
+        <p class="team title is-5" >{{playoffs.1.0}}</p>
+          <p class="team title is-5">VS</p>
+        <p class="team title is-5" >{{playoffs.1.1}}</p>
+          <p class="team title is-5"><strong><font class="winners" color="gold">{{playoffs.1.2}}</font></strong></p>
+        <p >Venue: {{playoffs.1.3}}</p>
+          <a href="{% url 'iplindmatch' playoffs.1.4 playoffs.1.5 %}"style="margin-top:50px;" class="button is-danger is-rounded is-outlined">Match Deatils</a>
+    </div>
+    </div>
+      </div>
+  </div>
+    </div></div>
+     <div style="margin:10px;width:20%;margin-left:45px;" class="column  is-one-quarter">
+     <div class="card">
+            <div class='card equal-height'>
+    <div class="card-content">
+    <div class="media">
+      <div class="media-content has-text-centered">
+        <p class="team title is-5" >{{playoffs.2.0}}</p>
+          <p class="team title is-5">VS</p>
+        <p class="team title is-5" >{{playoffs.2.1}}</p>
+          <p class="team title is-5"><strong><font class="winners" color="gold">{{playoffs.2.2}}</font></strong></p>
+        <p >Venue: {{playoffs.2.3}}</p>
+          <a href="{% url 'iplindmatch' playoffs.2.4 playoffs.2.5 %}" style="margin-top:50px;" class="button is-danger is-rounded is-outlined">Match Deatils</a>
+    </div>
+    </div>
+      </div>
+  </div>
+    </div></div>
+     <div style="margin:10px;width:20%;margin-left:45px;" class="column  is-one-quarter">
+     <div class="card">
+            <div class='card equal-height'>
+    <div class="card-content">
+    <div class="media">
+      <div class="media-content has-text-centered">
+        <p class="team title is-5" >{{playoffs.3.0}}</p>
+          <p class="team title is-5">VS</p>
+        <p class="team title is-5" >{{playoffs.3.1}}</p>
+          <p class="team title is-5"><strong><font class="winners" color="gold">{{playoffs.3.2}}</font></strong></p>
+        <p >Venue: {{playoffs.3.3}}</p>
+          <a href="{% url 'iplindmatch' playoffs.3.4 playoffs.3.5 %}" style="margin-top:25px;" class="button is-danger is-rounded is-outlined">Match Deatils</a>
+    </div>
+    </div>
+      </div>
+  </div>
+    </div></div>
+</div>
+<div class="columns is-multiline is-mobile">
+    <div  style="margin-left:50px;" class="column  is-one-third box">
+        <p class="color"><strong style="margin-left:145px;"><font>Top 10 batsmans</font></strong></p>
+        <table class="table is-hoverable table is-fullwidth">
+             <tr>
+                    <th>Player</th>
+                    <th>Runs</th>
+                </tr>
+            {% for batsman in Batsman %}
+            <tr>
+
+                <td>{{batsman.batsman}}</td>
+                <td>{{batsman.dsum}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+     <div style="margin-left:330px;" class="column is-one-third box">
+         <p class="color"><strong style="margin-left:145px;"><font>Top 10 Bowlers</font></strong></p>
+        <table class="table is-hoverable table is-fullwidth">
+            <tr>
+                    <th>Player</th>
+                    <th>Wickets</th>
+                </tr>
+            {% for bowler in Bowler %}
+            <tr>
+
+                <td>{{bowler.bowler}}</td>
+                <td>{{bowler.dsum}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+</body>
+</html>
